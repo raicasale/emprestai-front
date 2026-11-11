@@ -45,15 +45,30 @@ export const App: React.FC = () => {
   // Login / Logout
   const handleLogin = (email: string, role: UserRole) => {
     const isOps = role === 'operacoes';
+    const isProfessor = email.toLowerCase().includes('marcelo.grilo');
+
+    let displayName = isOps ? 'Operações TI' : 'Colaborador';
+    if (isProfessor) {
+      displayName = 'Marcelo Grilo';
+    } else if (email === INITIAL_USER.email) {
+      displayName = INITIAL_USER.name;
+    } else {
+      const namePart = email.split('@')[0];
+      displayName = namePart
+        .split('.')
+        .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+        .join(' ');
+    }
+
     setUser({
-      id: isOps ? 'usr-ops' : INITIAL_USER.id,
-      name: isOps ? 'Operações TI' : INITIAL_USER.name,
+      id: isProfessor ? 'usr-marcelo-grilo' : isOps ? 'usr-ops' : `usr-${Date.now()}`,
+      name: displayName,
       email,
       role,
     });
     // Conforme seção 6: "Entrar" -> Catálogo; "Entrar como Operações" -> Operações
     setActiveTab(isOps ? 'operacoes' : 'catalogo');
-    showToast(isOps ? 'Bem-vindo(a) ao painel de Operações' : 'Login realizado com sucesso');
+    showToast(isOps ? 'Bem-vindo(a) ao painel de Operações' : `Bem-vindo(a), ${displayName}!`);
   };
 
   const handleLogout = () => {

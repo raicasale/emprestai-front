@@ -169,6 +169,22 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
                 className="bg-surface border border-divider rounded-lg p-[18px] flex flex-col justify-between gap-3 animate-fadeUp hover:border-text/25 transition-all"
               >
                 <div>
+                  {/* Foto do Equipamento (Proporção 800x600 garantida) */}
+                  <div className="relative w-full h-[160px] bg-[#161826] rounded-md overflow-hidden mb-3 border border-divider/40">
+                    <img
+                      src={item.imageUrl || `/equipamentos/${item.patrimony}.jpg`}
+                      alt={item.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform hover:scale-105 duration-300"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        if (!target.src.endsWith(`/equipamentos/${item.patrimony}.jpg`)) {
+                          target.src = `/equipamentos/${item.patrimony}.jpg`;
+                        }
+                      }}
+                    />
+                  </div>
+
                   <div className="flex items-start justify-between gap-2 mb-1">
                     <span className="text-[11px] font-semibold tracking-[0.08em] text-text/45 uppercase">
                       {item.category}
@@ -205,6 +221,22 @@ export const CatalogPage: React.FC<CatalogPageProps> = ({
           })}
         </div>
       )}
+
+      {/* Crédito obrigatório exigido pelo contrato da Entrega 2 e termos da API */}
+      <div className="mt-12 pt-4 border-t border-divider/40 flex flex-col sm:flex-row items-center justify-between gap-2 text-[12px] text-text/45">
+        <span>EMPREST.AI — Catálogo interno de equipamentos</span>
+        <span>
+          Fotos:{' '}
+          <a
+            href="https://pixabay.com/pt/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-accent-400 hover:underline"
+          >
+            Pixabay
+          </a>
+        </span>
+      </div>
     </div>
   );
 };

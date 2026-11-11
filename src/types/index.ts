@@ -8,6 +8,7 @@ export interface Equipment {
   category: 'Notebook' | 'Monitor' | 'Cabo' | 'Câmera' | 'Acessório';
   patrimony: string;
   status: EquipmentStatus;
+  imageUrl?: string;
   notes?: string;
   assignedTo?: string; // nome do usuário caso emprestado
   dueDate?: string; // data de devolução prevista
